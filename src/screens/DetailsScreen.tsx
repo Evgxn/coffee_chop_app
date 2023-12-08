@@ -8,7 +8,9 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from "react-native";
+
 import { useStore } from "../store/store";
+
 import {
   BORDERRADIUS,
   COLORS,
@@ -17,6 +19,7 @@ import {
   SPACING,
 } from "../theme/theme";
 import ImageBackgroundInfo from "../components/ImageBackgroundInfo";
+import PaymentFooter from "../components/PaymentFooter";
 
 const DetailsScreen = ({ navigation, route }: any) => {
   const ItemOfIndex = useStore((state: any) =>
@@ -28,6 +31,9 @@ const DetailsScreen = ({ navigation, route }: any) => {
     (state: any) => state.deleteFromFavoriteList
   );
 
+  const addToCart = useStore((state: any) => state.addToCart);
+  const calculateCartPrice = useStore((state: any) => state.calculateCartPrice);
+
   const [price, setPrice] = useState(ItemOfIndex.prices[0]);
   const [fullDescription, setFullDescription] = useState(false);
 
@@ -37,6 +43,30 @@ const DetailsScreen = ({ navigation, route }: any) => {
 
   const BackHandler = () => {
     navigation.pop();
+  };
+
+  const addToCartHandler = ({
+    id,
+    index,
+    name,
+    roasted,
+    imagelink_square,
+    special_ingredient,
+    type,
+    price,
+  }: any) => {
+    addToCart({
+      id,
+      index,
+      name,
+      roasted,
+      imagelink_square,
+      special_ingredient,
+      type,
+      prices: [{ ...price, quantity: 1 }],
+    });
+    calculateCartPrice();
+    navigation.navigate("Cart");
   };
 
   return (
@@ -121,7 +151,22 @@ const DetailsScreen = ({ navigation, route }: any) => {
             ))}
           </View>
         </View>
-        
+        <PaymentFooter
+          price={price}
+          buttonTitle="Add to Cart"
+          buttonPressHandler={() => {
+            addToCartHandler({
+              id: ItemOfIndex.id,
+              index: ItemOfIndex.index,
+              name: ItemOfIndex.name,
+              roasted: ItemOfIndex.roasted,
+              imagelink_square: ItemOfIndex.imagelink_square,
+              special_ingredient: ItemOfIndex.special_ingredient,
+              type: ItemOfIndex.type,
+              price: price,
+            });
+          }}
+        />
       </ScrollView>
     </View>
   );
@@ -134,6 +179,7 @@ const styles = StyleSheet.create({
   },
   ScrollViewFlex: {
     flexGrow: 1,
+    justifyContent: "space-between",
   },
   FooterInfoArea: {
     padding: SPACING.space_20,
