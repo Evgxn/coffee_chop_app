@@ -90,7 +90,7 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({
           <BGIcon
             color={COLORS.primaryWhiteHex}
             name={"add"}
-            BGColor={COLORS.primaryOrangeHex}
+            bgColor={COLORS.primaryOrangeHex}
             size={FONTSIZE.size_10}
           />
         </TouchableOpacity>

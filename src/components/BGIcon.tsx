@@ -7,19 +7,19 @@ interface BGIconProps {
   name: string;
   color: string;
   size: number;
-  bGColor: string;
+  bgColor: string;
 }
 
-const BGIcon: React.FC<BGIconProps> = ({ name, color, size, bGColor }) => {
+const BGIcon: React.FC<BGIconProps> = ({ name, color, size, bgColor }) => {
   return (
-    <View style={[styles.iconBG, { backgroundColor: bGColor }]}>
+    <View style={[styles.iconBg, { backgroundColor: bgColor }]}>
       <CustomIcon name={name} color={color} size={size} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  iconBG: {
+  iconBg: {
     height: SPACING.space_30,
     width: SPACING.space_30,
     justifyContent: "center",

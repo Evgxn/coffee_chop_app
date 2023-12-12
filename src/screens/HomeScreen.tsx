@@ -20,7 +20,7 @@ import {
   FONTSIZE,
   SPACING,
 } from "../theme/theme";
-import HeaderBar from "../components/ui/HomeScreen/HeaderBar";
+import HeaderBar from "../components/HeaderBar";
 import CustomIcon from "../components/CustomIcon";
 import CoffeeCard from "../components/ui/HomeScreen/CoffeeCard";
 import { Dimensions } from "react-native";
@@ -262,7 +262,7 @@ const HomeScreen = ({ navigation }: any) => {
                   id={item.id}
                   index={item.index}
                   type={item.type}
-                  roasted={item.rosted}
+                  roasted={item.roasted}
                   imagelink_square={item.imagelink_square}
                   name={item.name}
                   special_ingredient={item.special_ingredient}
@@ -302,7 +302,7 @@ const HomeScreen = ({ navigation }: any) => {
                   id={item.id}
                   index={item.index}
                   type={item.type}
-                  roasted={item.rosted}
+                  roasted={item.roasted}
                   imagelink_square={item.imagelink_square}
                   name={item.name}
                   special_ingredient={item.special_ingredient}

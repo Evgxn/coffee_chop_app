@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from "../../../theme/theme";
-import GradientBGIcon from "../../GradientBGIcon";
-import ProfilePic from "../../ProfilePic";
+import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from "../theme/theme";
+import GradientBGIcon from "./GradientBGIcon";
+import ProfilePic from "./ProfilePic";
 
 interface HeaderBarProps {
   title?: string;
