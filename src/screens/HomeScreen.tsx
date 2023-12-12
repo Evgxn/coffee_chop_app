@@ -183,53 +183,56 @@ const HomeScreen = ({ navigation }: any) => {
             <></>
           )}
         </View>
-        {/* {Category Scroller} */}
 
-        <ScrollView
+        {/* {Categories flatlist} */}
+
+        <FlatList
+          style={styles.CategoryScrollViewStyle}
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.CategoryScrollViewStyle}
-        >
-          {categories.map((data, index) => (
-            <View
-              key={index.toString()}
-              style={styles.CategoryScrollViewContainer}
-            >
-              <TouchableOpacity
-                style={styles.CategoryScrollViewItem}
-                onPress={() => {
-                  ListRef?.current?.scrollToOffset({
-                    animated: true,
-                    offset: 0,
-                  });
-                  setCategoryIndex({
-                    index: index,
-                    category: categories[index],
-                  });
-                  setSortedCoffee([
-                    ...getCoffeeList(categories[index], CoffeeList),
-                  ]);
-                }}
+          data={categories}
+          renderItem={({ item, index }) => {
+            return (
+              <View
+                key={index.toString()}
+                style={styles.CategoryScrollViewContainer}
               >
-                <Text
-                  style={[
-                    styles.CategoryText,
-                    categoryIndex.index == index
-                      ? { color: COLORS.primaryOrangeHex }
-                      : {},
-                  ]}
+                <TouchableOpacity
+                  style={styles.CategoryScrollViewItem}
+                  onPress={() => {
+                    ListRef?.current?.scrollToOffset({
+                      animated: true,
+                      offset: 0,
+                    });
+                    setCategoryIndex({
+                      index: index,
+                      category: categories[index],
+                    });
+                    setSortedCoffee([
+                      ...getCoffeeList(categories[index], CoffeeList),
+                    ]);
+                  }}
                 >
-                  {data}
-                </Text>
-                {categoryIndex.index == index ? (
-                  <View style={styles.ActiveCategory} />
-                ) : (
-                  <></>
-                )}
-              </TouchableOpacity>
-            </View>
-          ))}
-        </ScrollView>
+                  <Text
+                    style={[
+                      styles.CategoryText,
+                      categoryIndex.index == index
+                        ? { color: COLORS.primaryOrangeHex }
+                        : {},
+                    ]}
+                  >
+                    {item}
+                  </Text>
+                  {categoryIndex.index == index ? (
+                    <View style={styles.ActiveCategory} />
+                  ) : (
+                    <></>
+                  )}
+                </TouchableOpacity>
+              </View>
+            );
+          }}
+        />
         {/* {Coffee FlatList} */}
 
         <FlatList
@@ -299,7 +302,7 @@ const HomeScreen = ({ navigation }: any) => {
                   id={item.id}
                   index={item.index}
                   type={item.type}
-                  rosted={item.rosted}
+                  roasted={item.rosted}
                   imagelink_square={item.imagelink_square}
                   name={item.name}
                   special_ingredient={item.special_ingredient}
@@ -349,7 +352,7 @@ const styles = StyleSheet.create({
     color: COLORS.primaryWhiteHex,
   },
   CategoryScrollViewStyle: {
-    paddingHorizontal: SPACING.space_20,
+    marginHorizontal: SPACING.space_20,
     marginBottom: SPACING.space_20,
   },
   CategoryScrollViewContainer: {
