@@ -1,30 +1,30 @@
-import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {BORDERRADIUS, SPACING} from '../theme/theme';
-import CustomIcon from './CustomIcon';
+import React, { Component } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { BORDER_RADIUS, SPACING } from "../theme/theme";
+import CustomIcon from "./CustomIcon";
 
 interface BGIconProps {
   name: string;
   color: string;
   size: number;
-  BGColor: string;
+  bGColor: string;
 }
 
-const BGIcon: React.FC<BGIconProps> = ({name, color, size, BGColor}) => {
+const BGIcon: React.FC<BGIconProps> = ({ name, color, size, bGColor }) => {
   return (
-    <View style={[styles.IconBG, {backgroundColor: BGColor}]}>
-        <CustomIcon name={name} color={color} size={size}/>
+    <View style={[styles.iconBG, { backgroundColor: bGColor }]}>
+      <CustomIcon name={name} color={color} size={size} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  IconBG: {
+  iconBG: {
     height: SPACING.space_30,
     width: SPACING.space_30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: BORDERRADIUS.radius_8,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: BORDER_RADIUS.radius_8,
   },
 });
 

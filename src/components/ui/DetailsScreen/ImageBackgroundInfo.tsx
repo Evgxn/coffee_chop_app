@@ -7,18 +7,18 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import GradientBGIcon from "./GradientBGIcon";
+import GradientBGIcon from "../../GradientBGIcon";
 import {
-  BORDERRADIUS,
+  BORDER_RADIUS,
   COLORS,
   FONTFAMILY,
   FONTSIZE,
   SPACING,
-} from "../theme/theme";
-import CustomIcon from "./CustomIcon";
+} from "../../../theme/theme";
+import CustomIcon from "../../CustomIcon";
 
 interface ImageBackgroundInfoProps {
-  EnableBackHandler: boolean;
+  enableBackHandler: boolean;
   imagelink_portrait: ImageProps;
   type: string;
   id: string;
@@ -29,12 +29,12 @@ interface ImageBackgroundInfoProps {
   average_rating: number;
   ratings_count: string;
   roasted: string;
-  BackHandler?: any;
-  ToggleFavourite: any;
+  backHandler?: any;
+  toggleFavourite: any;
 }
 
 const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
-  EnableBackHandler,
+  enableBackHandler,
   imagelink_portrait,
   type,
   id,
@@ -45,20 +45,20 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
   average_rating,
   ratings_count,
   roasted,
-  BackHandler,
-  ToggleFavourite,
+  backHandler,
+  toggleFavourite,
 }) => {
   return (
     <View>
       <ImageBackground
         source={imagelink_portrait}
-        style={styles.ItemBackgroundImage}
+        style={styles.itemBackgroundImage}
       >
-        {EnableBackHandler ? (
-          <View style={styles.ImageHeaderBarContainerWithBack}>
+        {enableBackHandler ? (
+          <View style={styles.imageHeaderBarContainerWithBack}>
             <TouchableOpacity
               onPress={() => {
-                BackHandler();
+                backHandler();
               }}
             >
               <GradientBGIcon
@@ -69,7 +69,7 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                ToggleFavourite(favourite, type, id);
+                toggleFavourite(favourite, type, id);
               }}
             >
               <GradientBGIcon
@@ -82,10 +82,10 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
             </TouchableOpacity>
           </View>
         ) : (
-          <View style={styles.ImageHeaderBarContainerWithoutBack}>
+          <View style={styles.imageHeaderBarContainerWithoutBack}>
             <TouchableOpacity
               onPress={() => {
-                ToggleFavourite(favourite, type, id);
+                toggleFavourite(favourite, type, id);
               }}
             >
               <GradientBGIcon
@@ -99,17 +99,17 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
           </View>
         )}
 
-        <View style={styles.ImageInfoCounterContainer}>
-          <View style={styles.ImageInfoInnerContainer}>
-            <View style={styles.InfoContainerRow}>
+        <View style={styles.imageInfoCounterContainer}>
+          <View style={styles.imageInfoInnerContainer}>
+            <View style={styles.infoContainerRow}>
               <View>
-                <Text style={styles.ItemTitleText}>{name}</Text>
-                <Text style={styles.ItemSubTitleText}>
+                <Text style={styles.itemTitleText}>{name}</Text>
+                <Text style={styles.itemSubTitleText}>
                   {special_ingredient}
                 </Text>
               </View>
-              <View style={styles.ItemPropertiesContainer}>
-                <View style={styles.ProperFirst}>
+              <View style={styles.itemPropertiesContainer}>
+                <View style={styles.properFirst}>
                   <CustomIcon
                     name={type == "Bean" ? "bean" : "beans"}
                     size={type == "Bean" ? FONTSIZE.size_18 : FONTSIZE.size_24}
@@ -117,7 +117,7 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
                   />
                   <Text
                     style={[
-                      styles.PropertyTextFirst,
+                      styles.propertyTextFirst,
                       {
                         marginTop:
                           type == "Bean"
@@ -129,28 +129,28 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
                     {type}
                   </Text>
                 </View>
-                <View style={styles.ProperFirst}>
+                <View style={styles.properFirst}>
                   <CustomIcon
                     name={type == "Bean" ? "location" : "drop"}
                     size={FONTSIZE.size_16}
                     color={COLORS.primaryOrangeHex}
                   />
-                  <Text style={styles.PropertyTextLast}>{ingredients}</Text>
+                  <Text style={styles.propertyTextLast}>{ingredients}</Text>
                 </View>
               </View>
             </View>
-            <View style={styles.InfoContainerRow}>
-              <View style={styles.RaitingContainer}>
+            <View style={styles.infoContainerRow}>
+              <View style={styles.raitingContainer}>
                 <CustomIcon
                   name={"star"}
                   color={COLORS.primaryOrangeHex}
                   size={FONTSIZE.size_20}
                 />
-                <Text style={styles.RaitingText}>{average_rating}</Text>
-                <Text style={styles.RaitingCountText}>({ratings_count})</Text>
+                <Text style={styles.raitingText}>{average_rating}</Text>
+                <Text style={styles.raitingCountText}>({ratings_count})</Text>
               </View>
-              <View style={styles.RoastedContainer}>
-                <Text style={styles.RoastedText}>{roasted}</Text>
+              <View style={styles.roastedContainer}>
+                <Text style={styles.roastedText}>{roasted}</Text>
               </View>
             </View>
           </View>
@@ -162,101 +162,97 @@ const ImageBackgroundInfo: React.FC<ImageBackgroundInfoProps> = ({
 
 const styles = StyleSheet.create({
   container: {},
-  ItemBackgroundImage: {
+  itemBackgroundImage: {
     width: "100%",
     aspectRatio: 20 / 25,
     justifyContent: "space-between",
   },
-  ImageHeaderBarContainerWithBack: {
+  imageHeaderBarContainerWithBack: {
     padding: SPACING.space_30,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
-  ImageHeaderBarContainerWithoutBack: {
+  imageHeaderBarContainerWithoutBack: {
     padding: SPACING.space_30,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end",
   },
-  ImageInfoCounterContainer: {
+  imageInfoCounterContainer: {
     paddingVertical: SPACING.space_24,
     paddingHorizontal: SPACING.space_30,
     backgroundColor: COLORS.primaryBlackRGBA,
-    borderTopLeftRadius: BORDERRADIUS.radius_20 * 2,
-    borderTopRightRadius: BORDERRADIUS.radius_20 * 2,
+    borderTopLeftRadius: BORDER_RADIUS.radius_20 * 2,
+    borderTopRightRadius: BORDER_RADIUS.radius_20 * 2,
   },
-  ImageInfoInnerContainer: {
+  imageInfoInnerContainer: {
     justifyContent: "space-between",
     gap: SPACING.space_15,
   },
-  InfoContainerRow: {
+  infoContainerRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
-  ItemPropertiesContainer: {
+  itemPropertiesContainer: {
     flexDirection: "row",
     alignItems: "center",
     gap: SPACING.space_20,
   },
-  ItemTitleText: {
+  itemTitleText: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: SPACING.space_24,
     color: COLORS.primaryWhiteHex,
   },
-  ItemSubTitleText: {
+  itemSubTitleText: {
     fontFamily: FONTFAMILY.poppins_medium,
     fontSize: SPACING.space_12,
     color: COLORS.primaryWhiteHex,
   },
-  ProperFirst: {
+  properFirst: {
     height: 55,
     width: 55,
-    borderRadius: BORDERRADIUS.radius_15,
+    borderRadius: BORDER_RADIUS.radius_15,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: COLORS.primaryBlackHex,
   },
-  PropertyTextFirst: {
+  propertyTextFirst: {
     fontFamily: FONTFAMILY.poppins_medium,
     fontSize: SPACING.space_10,
     color: COLORS.primaryWhiteHex,
   },
-  PropertyTextLast: {
+  propertyTextLast: {
     fontFamily: FONTFAMILY.poppins_medium,
     fontSize: SPACING.space_10,
     color: COLORS.primaryWhiteHex,
     marginTop: SPACING.space_4 + SPACING.space_2,
   },
-  test1: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  RaitingContainer: {
+  raitingContainer: {
     flexDirection: "row",
     gap: SPACING.space_10,
     alignItems: "center",
   },
-  RaitingText: {
+  raitingText: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_18,
     color: COLORS.primaryWhiteHex,
   },
-  RaitingCountText: {
+  raitingCountText: {
     fontFamily: FONTFAMILY.poppins_regular,
     fontSize: FONTSIZE.size_12,
     color: COLORS.primaryWhiteHex,
   },
-  RoastedContainer: {
+  roastedContainer: {
     height: 55,
     width: 55 * 2 + SPACING.space_20,
-    borderRadius: BORDERRADIUS.radius_15,
+    borderRadius: BORDER_RADIUS.radius_15,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: COLORS.primaryBlackHex,
   },
-  RoastedText: {
+  roastedText: {
     fontFamily: FONTFAMILY.poppins_regular,
     fontSize: FONTSIZE.size_10,
     color: COLORS.primaryWhiteHex,

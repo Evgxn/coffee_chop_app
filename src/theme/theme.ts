@@ -55,7 +55,7 @@ export const FONTSIZE = {
   size_30: 30,
 };
 
-export const BORDERRADIUS = {
+export const BORDER_RADIUS = {
   radius_4: 4,
   radius_8: 8,
   radius_10: 10,

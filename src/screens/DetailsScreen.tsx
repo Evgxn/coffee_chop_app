@@ -12,14 +12,14 @@ import {
 import { useStore } from "../store/store";
 
 import {
-  BORDERRADIUS,
+  BORDER_RADIUS,
   COLORS,
   FONTFAMILY,
   FONTSIZE,
   SPACING,
 } from "../theme/theme";
-import ImageBackgroundInfo from "../components/ImageBackgroundInfo";
-import PaymentFooter from "../components/PaymentFooter";
+import ImageBackgroundInfo from "../components/ui/DetailsScreen/ImageBackgroundInfo";
+import PaymentFooter from "../components/ui/DetailsScreen/PaymentFooter";
 
 const DetailsScreen = ({ navigation, route }: any) => {
   const ItemOfIndex = useStore((state: any) =>
@@ -70,14 +70,14 @@ const DetailsScreen = ({ navigation, route }: any) => {
   };
 
   return (
-    <View style={styles.ScreenContainer}>
+    <View style={styles.screenContainer}>
       <StatusBar backgroundColor={COLORS.primaryBlackHex} />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.ScrollViewFlex}
+        contentContainerStyle={styles.scrollViewFlex}
       >
         <ImageBackgroundInfo
-          EnableBackHandler={true}
+          enableBackHandler={true}
           imagelink_portrait={ItemOfIndex.imagelink_portrait}
           type={ItemOfIndex.type}
           id={ItemOfIndex.id}
@@ -88,18 +88,18 @@ const DetailsScreen = ({ navigation, route }: any) => {
           average_rating={ItemOfIndex.average_rating}
           ratings_count={ItemOfIndex.ratings_count}
           roasted={ItemOfIndex.roasted}
-          BackHandler={BackHandler}
-          ToggleFavourite={ToggleFavourite}
+          backHandler={BackHandler}
+          toggleFavourite={ToggleFavourite}
         />
-        <View style={styles.FooterInfoArea}>
-          <Text style={styles.InfoTitle}>Description</Text>
+        <View style={styles.footerInfoArea}>
+          <Text style={styles.infoTitle}>Description</Text>
           {fullDescription ? (
             <TouchableWithoutFeedback
               onPress={() => {
                 setFullDescription((prev) => !prev);
               }}
             >
-              <Text style={styles.DescText}>{ItemOfIndex.description}</Text>
+              <Text style={styles.descText}>{ItemOfIndex.description}</Text>
             </TouchableWithoutFeedback>
           ) : (
             <TouchableWithoutFeedback
@@ -107,13 +107,13 @@ const DetailsScreen = ({ navigation, route }: any) => {
                 setFullDescription((prev) => !prev);
               }}
             >
-              <Text numberOfLines={3} style={styles.DescText}>
+              <Text numberOfLines={3} style={styles.descText}>
                 {ItemOfIndex.description}
               </Text>
             </TouchableWithoutFeedback>
           )}
-          <Text style={styles.InfoTitle}>Size</Text>
-          <View style={styles.SizeOuterContainer}>
+          <Text style={styles.infoTitle}>Size</Text>
+          <View style={styles.sizeOuterContainer}>
             {ItemOfIndex.prices.map((data: any) => (
               <TouchableOpacity
                 onPress={() => {
@@ -121,7 +121,7 @@ const DetailsScreen = ({ navigation, route }: any) => {
                 }}
                 key={data.size}
                 style={[
-                  styles.SizeBox,
+                  styles.sizeBox,
                   {
                     borderColor:
                       data.size == price.size
@@ -132,7 +132,7 @@ const DetailsScreen = ({ navigation, route }: any) => {
               >
                 <Text
                   style={[
-                    styles.SizeText,
+                    styles.sizeText,
                     {
                       fontSize:
                         ItemOfIndex.type == "bean"
@@ -173,46 +173,46 @@ const DetailsScreen = ({ navigation, route }: any) => {
 };
 
 const styles = StyleSheet.create({
-  ScreenContainer: {
+  screenContainer: {
     flex: 1,
     backgroundColor: COLORS.primaryBlackHex,
   },
-  ScrollViewFlex: {
+  scrollViewFlex: {
     flexGrow: 1,
     justifyContent: "space-between",
   },
-  FooterInfoArea: {
+  footerInfoArea: {
     padding: SPACING.space_20,
   },
-  InfoTitle: {
+  infoTitle: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_16,
     color: COLORS.primaryWhiteHex,
     marginBottom: SPACING.space_10,
   },
-  DescText: {
+  descText: {
     letterSpacing: 0.5,
     fontFamily: FONTFAMILY.poppins_regular,
     fontSize: FONTSIZE.size_14,
     color: COLORS.primaryWhiteHex,
     marginBottom: SPACING.space_30,
   },
-  SizeOuterContainer: {
+  sizeOuterContainer: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     gap: SPACING.space_20,
   },
-  SizeBox: {
+  sizeBox: {
     flex: 1,
     backgroundColor: COLORS.primaryDarkGreyHex,
     alignItems: "center",
     justifyContent: "center",
     height: SPACING.space_24 * 2,
-    borderRadius: BORDERRADIUS.radius_10,
+    borderRadius: BORDER_RADIUS.radius_10,
     borderWidth: 2,
   },
-  SizeText: {
+  sizeText: {
     fontFamily: FONTFAMILY.poppins_medium,
   },
 });

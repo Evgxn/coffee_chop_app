@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import {
-  BORDERRADIUS,
+  BORDER_RADIUS,
   COLORS,
   FONTFAMILY,
   FONTSIZE,
   SPACING,
-} from "../theme/theme";
+} from "../../../theme/theme";
 
 interface PriceProps {
   price: string;
@@ -24,59 +24,59 @@ const PaymentFooter: React.FC<PaymentFooterProps> = ({
   buttonTitle,
 }) => {
   return (
-    <View style={styles.PriceFooter}>
-      <View style={styles.PriceContainer}>
-        <Text style={styles.PriceTitle}>Price</Text>
-        <Text style={styles.PriceText}>
-          {price.currency} <Text style={styles.Price}>{price.price}</Text>
+    <View style={styles.priceFooter}>
+      <View style={styles.priceContainer}>
+        <Text style={styles.priceTitle}>Price</Text>
+        <Text style={styles.priceText}>
+          {price.currency} <Text style={styles.price}>{price.price}</Text>
         </Text>
       </View>
       <TouchableOpacity
-        style={styles.PayButton}
+        style={styles.payButton}
         onPress={() => {
           buttonPressHandler();
         }}
       >
-        <Text style={styles.ButtonText}>{buttonTitle}</Text>
+        <Text style={styles.buttonText}>{buttonTitle}</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  PriceFooter: {
+  priceFooter: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     gap: SPACING.space_20,
     padding: SPACING.space_20,
   },
-  PriceContainer: {
+  priceContainer: {
     alignItems: "center",
     width: 100,
   },
-  PriceTitle: {
+  priceTitle: {
     fontFamily: FONTFAMILY.poppins_medium,
     fontSize: FONTSIZE.size_14,
     color: COLORS.secondaryLightGreyHex,
   },
-  PriceText: {
+  priceText: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_24,
     color: COLORS.primaryOrangeHex,
   },
-  Price: {
+  price: {
     color: COLORS.primaryWhiteHex,
   },
-  PayButton: {
+  payButton: {
     backgroundColor: COLORS.primaryOrangeHex,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     height: SPACING.space_36 * 2,
-    borderRadius: BORDERRADIUS.radius_20,
+    borderRadius: BORDER_RADIUS.radius_20,
   },
-  ButtonText: {
+  buttonText: {
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_18,
     color: COLORS.primaryWhiteHex,
