@@ -74,17 +74,13 @@ export const useStore = create(
           produce((state) => {
             const list = type === "Coffee" ? state.CoffeeList : state.BeanList;
 
-            for (let i = 0; i < list?.length; i++) {
-              if (list[i].id === id) {
-                if (list[i].favourite === false) {
-                  list[i].favourite = true;
-                  state.FavoritesList.unshift(list[i]);
-                } else {
-                  list[i].favourite = false;
-                }
-                break;
+            list.find((item: any) => {
+              if (item.id == id && item.favourite == false) {
+                item.favourite = true;
+                state.FavoritesList.unshift(item);
               }
-            }
+            });
+            console.log(state.FavoritesList.length);
           })
         ),
       deleteFromFavoriteList: (type: string, id: string) =>
@@ -92,24 +88,20 @@ export const useStore = create(
           produce((state) => {
             const list = type === "Coffee" ? state.CoffeeList : state.BeanList;
 
-            for (let i = 0; i < list?.length; i++) {
-              if (list[i].id === id) {
-                if (list[i].favourite === true) {
-                  list[i].favourite = false;
-                } else {
-                  list[i].favourite = false;
+            state.FavoritesList.find((favItem: any, index: number) => {
+              list.find((item: any) => {
+                if (
+                  item.id == id &&
+                  item.favourite == true &&
+                  favItem.id == id
+                ) {
+                  item.favourite = false;
+                  state.FavoritesList.splice(index, 1);
                 }
-                break;
-              }
-            }
-            let spliceIndex = -1;
-            for (let i = 0; i < state.FavoritesList.length; i++) {
-              if (state.FavoritesList[i].id == id) {
-                spliceIndex = i;
-                break;
-              }
-            }
-            state.FavoritesList.splice(spliceIndex, 1);
+              });
+            });
+
+            console.log(state.FavoritesList.length);
           })
         ),
     }),
