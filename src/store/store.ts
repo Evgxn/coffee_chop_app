@@ -7,7 +7,7 @@ import BeansData from "../data/BeansData";
 
 export const useStore = create(
   persist(
-    (set, get) => ({
+    (set) => ({
       CoffeeList: CoffeeData,
       BeanList: BeansData,
       CartPrice: 0,
@@ -18,23 +18,21 @@ export const useStore = create(
         set(
           produce((state) => {
             let found = false;
-            for (let i = 0; i < state.CartList.length; i++) {
-              if (state.CartList[i].id == cartItem.id) {
+            let size = false;
+
+            state.CartList.find((cartListItem: any, cartListIndex: number) => {
+              if (cartListItem.id == cartItem.id) {
                 found = true;
-                let size = false;
-                for (let j = 0; j < state.CartList[i].prices.length; j++) {
-                  if (
-                    state.CartList[i].prices[j].size == cartItem.prices[0].size
-                  ) {
+                cartListItem.prices.find((priceItem: any) => {
+                  if (priceItem.size == cartItem.prices[0].size) {
                     size = true;
-                    state.CartList[i].prices[j].quantity++;
-                    break;
+                    priceItem.quantity++;
                   }
-                }
+                });
                 if (size == false) {
-                  state.CartList[i].prices.push(cartItem.prices[0]);
+                  state.CartList[cartListIndex].prices.push(cartItem.prices[0]);
                 }
-                state.CartList[i].prices.sort((a: any, b: any) => {
+                cartListItem.prices.sort((a: any, b: any) => {
                   if (a.size > b.size) {
                     return -1;
                   }
@@ -43,30 +41,31 @@ export const useStore = create(
                   }
                   return 0;
                 });
-                break;
               }
-            }
+            });
             if (found == false) {
               state.CartList.push(cartItem);
             }
+            //console.log(state.CartList.length);
           })
         ),
       calculateCartPrice: () =>
         set(
           produce((state) => {
-            let totalprice = 0;
-            for (let i = 0; i < state.CartList.length; i++) {
-              let tempprice = 0;
-              for (let j = 0; j < state.CartList[i].prices.length; j++) {
-                tempprice =
-                  tempprice +
-                  parseFloat(state.CartList[i].prices[j].price) *
-                    state.CartList[i].prices[j].quantity;
-              }
-              state.CartList[i].ItemPrice = tempprice.toFixed(2).toString();
-              totalprice = totalprice + tempprice;
-            }
-            state.CartPrice = totalprice.toFixed(2).toString();
+            let totalPrice = 0;
+
+            state.CartList.find((cartListItem: any, index: number) => {
+              let tempPrice = 0;
+              cartListItem.prices.find((priceItem: any, index: number) => {
+                tempPrice =
+                  tempPrice + parseFloat(priceItem.price) * priceItem.quantity;
+              });
+              cartListItem.ItemPrice = tempPrice.toFixed(2).toString();
+
+              totalPrice = totalPrice + tempPrice;
+            });
+
+            state.CartPrice = totalPrice.toFixed(2).toString();
           })
         ),
       addToFavoriteList: (type: string, id: string) =>
@@ -104,33 +103,18 @@ export const useStore = create(
             console.log(state.FavoritesList.length);
           })
         ),
-      // incrementCartItemQuantity: (id: string, size: string) =>
-      //   set(
-      //     produce((state) => {
-      //       state.CartList.find((cartItem: any, index: number) => {
-      //         if (cartItem.id == id) {
-      //           cartItem.prices.find((priceItem: any) => {
-      //             if (priceItem.size == size) {
-      //               priceItem.quantity++;
-      //             }
-      //           });
-      //         }
-      //       });
-      //     })
-      //   ),
       incrementCartItemQuantity: (id: string, size: string) =>
         set(
           produce((state) => {
-            for (let i = 0; i < state.CartList.length; i++) {
-              if (state.CartList[i].id == id) {
-                for (let j = 0; j < state.CartList[i].prices.length; j++) {
-                  if (state.CartList[i].prices[j].size == size) {
-                    state.CartList[i].prices[j].quantity++;
-                    break;
+            state.CartList.find((cartItem: any, index: number) => {
+              if (cartItem.id == id) {
+                cartItem.prices.find((priceItem: any) => {
+                  if (priceItem.size == size) {
+                    priceItem.quantity++;
                   }
-                }
+                });
               }
-            }
+            });
           })
         ),
       decrementCartItemQuantity: (id: string, size: string) =>
